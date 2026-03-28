@@ -1,0 +1,109 @@
+# Prototipo de "agente juez": define aquí la personalidad del evaluador y la rúbrica.
+# Entrada: texto libre o diálogo (API /audit/text o /audit/transcript).
+#
+# Placeholders en prompts:
+#   {input}      — entrada normalizada (texto o diálogo formateado).
+#   {transcript} — alias de {input}.
+#   {context}    — metadatos de la API (additional_context), o vacío.
+#   {states}     — categorías de clasificación inyectadas.
+#   {questions}  — ítems del cuestionario activo.
+#
+# classification_labels = etiquetas del juez (heredado: call_states).
+# input.dialogue = cómo rotular turnos en diálogo (agent/user).
+
+evaluation:
+  system_prompt: |
+    Actúas como juez o auditor imparcial sobre el contenido que recibes.
+    Aplicas solo los criterios y formatos que indica cada tarea; no inventas reglas extra.
+    Cuando se pide JSON, respondes únicamente con JSON válido, sin texto adicional.
+
+  summary_prompt: |
+    Analiza el siguiente contenido y genera un resumen breve.
+
+    ### Contenido ###
+    {input}
+
+    ### Contexto adicional ###
+    {context}
+
+    ### Instrucciones ###
+    Responde ÚNICAMENTE con un JSON válido con el siguiente formato:
+    {{
+      "summary": "<resumen de 2-3 oraciones>",
+      "call_duration_assessment": "<vacío, o una etiqueta breve si aplica (p. ej. extensión o tipo de texto)>",
+      "key_topics": ["<tema1>", "<tema2>"],
+      "highlights": ["<punto destacado opcional>"]
+    }}
+
+  classification_prompt: |
+    Clasifica el siguiente contenido en una de las categorías indicadas.
+
+    ### Contenido ###
+    {input}
+
+    ### Contexto adicional ###
+    {context}
+
+    ### Categorías posibles ###
+    {states}
+
+    ### Instrucciones ###
+    Elige UNA categoría. Responde ÚNICAMENTE con un JSON válido:
+    {{
+      "classification": "<nombre exacto de la categoría>",
+      "confidence": <0.0 a 1.0>,
+      "reasoning": "<breve justificación>"
+    }}
+
+  questionnaire_prompt: |
+    Evalúa el siguiente contenido según la pauta.
+
+    ### Contenido ###
+    {input}
+
+    ### Contexto adicional ###
+    {context}
+
+    ### Pauta de evaluación ###
+    {questions}
+
+    ### Reglas ###
+    1. Responde true si la condición se cumple, false si no.
+    2. Para condiciones con "AND" u "OR": AND = deben cumplirse todas las partes; OR = basta una.
+
+    Responde ÚNICAMENTE con un JSON válido donde cada clave sea el número de la pregunta y el valor sea true o false.
+    Ejemplo: {{"1": true, "2": false, "3": true}}
+
+input:
+  dialogue:
+    speaker_labels:
+      agent: "Agente"
+      user: "Contacto"
+    roles_as_agent:
+      - agent
+      - assistant
+
+classification_labels:
+  - name: "INFORMATIVO"
+    description: "Contenido principalmente informativo o explicativo."
+  - name: "SOLICITUD"
+    description: "Se pide una acción, un dato o una resolución."
+  - name: "RECLAMO"
+    description: "Queja, insatisfacción o conflicto manifiesto."
+  - name: "NEUTRO_U_OTRO"
+    description: "No encaja claramente en las anteriores o es mixto/ambiguo."
+
+questionnaires:
+  default:
+    - "1.- ¿El texto comunica su propósito o idea principal de forma comprensible?"
+    - "2.- ¿El tono es coherente y apropiado al tipo de contenido?"
+    - "3.- ¿La información es internamente coherente (sin contradicciones graves)?"
+
+  dialogo_atencion_cliente:
+    - "1.- ¿El agente se identifica con nombre y empresa (si aplica al guion)?"
+    - "2.- ¿Se valida o reconoce al interlocutor cuando corresponde?"
+    - "3.- ¿Queda claro el motivo del contacto?"
+    - "4.- ¿La información sobre producto o proceso es clara?"
+    - "5.- ¿Se responden las dudas del interlocutor?"
+    - "6.- ¿Hay cierre o próximos pasos claros?"
+    - "7.- ¿La despedida es cordial o apropiada?"

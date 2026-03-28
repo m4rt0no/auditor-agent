@@ -1,0 +1,33 @@
+{
+  "audit_id": "887c6fdc",
+  "conversation_id": null,
+  "timestamp": "2026-02-27T11:57:54.646425",
+  "transcript_text": "Agente: Hola! Soy Catalina, la asistente virtual de Coopeuch. Hablo con ELIZABETH RUZ?\nContacto: Si?\nAgente: Gracias, ELIZABETH RUZ. Te comento que tienes una oferta preaprobada para un credito de consumo. Quieres que un ejecutivo te contacte para entregarte mas informacion?\nContacto: No.\nAgente: Entiendo, no hay problema. Si mas adelante quieres revisar alternativas, estaremos disponibles para ayudarte. Gracias por tu tiempo, que tengas un excelente dia.",
+  "summary": {
+    "summary": "La llamada tuvo como objetivo informar a la cliente sobre una oferta preaprobada de crédito y ofrecer que un ejecutivo se ponga en contacto para entregar más información. La cliente negó el interés en recibir seguimiento en este momento. La agente dejó la puerta abierta para revisar alternativas en el futuro y agradeció su tiempo.",
+    "call_duration_assessment": "",
+    "key_topics": [],
+    "highlights": []
+  },
+  "classification": {
+    "classification": "NO_INTERESADO",
+    "confidence": 0.85,
+    "reasoning": "Se contactó a la persona correcta (Elizabeth Ruz) y, tras presentar la oferta, el contacto declaró NO INTERESADO en que un ejecutivo se pusiera en contacto para ampliar la información."
+  },
+  "questionnaire": {
+    "questionnaire_name": "default",
+    "answers": {
+      "1": true,
+      "2": true,
+      "3": true,
+      "4": true,
+      "5": true,
+      "6": true,
+      "7": true,
+      "8": true
+    },
+    "score": 100.0
+  },
+  "additional_context": null,
+  "errors": []
+}

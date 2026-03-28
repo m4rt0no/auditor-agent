@@ -1,0 +1,33 @@
+{
+  "audit_id": "25deb502",
+  "conversation_id": null,
+  "timestamp": "2026-02-27T09:31:01.173709",
+  "transcript_text": "Agente: Hola! Soy Catalina, la asistente virtual de Coopeuch. Hablo con ISOLINA TORO?\nContacto: ...\nAgente: Hablo con ISOLINA TORO?\nContacto: ...\nAgente: Disculpe las molestias. Que tenga buen dia.",
+  "summary": {
+    "summary": "Propósito de la llamada: verificar si se hablaba con Isolina Toro y presentarse como la asistente virtual de Coopeuch. No se obtuvo respuesta del contacto y el agente concluyó la llamada con una despedida cortés.",
+    "call_duration_assessment": "",
+    "key_topics": [],
+    "highlights": []
+  },
+  "classification": {
+    "classification": "CONTACTADO_SIN_IDENTIDAD",
+    "confidence": 0.65,
+    "reasoning": "Se contactó a la persona (la llamada fue respondida), pero no se pudo verificar la identidad del contacto objetivo (no hay confirmación de ISOLINA TORO) y no hay indicios de interés o decisión."
+  },
+  "questionnaire": {
+    "questionnaire_name": "default",
+    "answers": {
+      "1": true,
+      "2": false,
+      "3": false,
+      "4": false,
+      "5": false,
+      "6": true,
+      "7": true,
+      "8": false
+    },
+    "score": 37.5
+  },
+  "additional_context": null,
+  "errors": []
+}

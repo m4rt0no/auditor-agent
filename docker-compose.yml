@@ -1,0 +1,13 @@
+version: '3.8'
+
+services:
+  auditor-agent:
+    build: .
+    ports:
+      - "${PORT:-8001}:8001"
+    env_file:
+      - .env.local
+    volumes:
+      - ./audits:/app/audits
+      - ./auditor.yaml:/app/auditor.yaml
+    restart: unless-stopped
